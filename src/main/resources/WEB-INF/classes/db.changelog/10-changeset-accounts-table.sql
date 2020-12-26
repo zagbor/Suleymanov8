@@ -1,4 +1,5 @@
-CREATE TABLE `suleimanov`.`accounts` (
+CREATE TABLE IF NOT EXISTS `accounts` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `accountstatus_id` INT NULL,
-  PRIMARY KEY (`id`))ENGINE=InnoDB;
+  PRIMARY KEY (`id`)
+  )ENGINE=InnoDB;

@@ -1,7 +1,7 @@
 package ru.zagbor.practice.suleimanov.task1.base.initialization;
 
 import liquibase.exception.DatabaseException;
-import org.junit.Test;
+import ru.zagbor.practice.suleimanov.task1.base.BaseVersionControllerImpl;
 import ru.zagbor.practice.suleimanov.task1.base.TestDataBaseImpl;
 
 import java.io.BufferedReader;
@@ -26,6 +26,7 @@ public class BaseInitialization {
     private static String URL = null;
     private static String USERNAME = null;
     private static String PASSWORD = null;
+    final static String CHANGELOG = BaseVersionControllerImpl.getCHANGELOG();
 
 
     public static String getURL() {
@@ -47,6 +48,7 @@ public class BaseInitialization {
         getDataUser();
         writeData();
         initialization();
+        new BaseVersionControllerImpl().executeLiquidBaseScripts(CHANGELOG);
         addTestDataBase();
     }
 
@@ -87,7 +89,7 @@ public class BaseInitialization {
         }
     }
 
-    private static void addTestDataBase() throws IOException, SQLException, DatabaseException {
+    public static void addTestDataBase() throws IOException, SQLException, DatabaseException {
         final TestDataBase testDataBase = new TestDataBaseImpl();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Хотите добавить тестовые данные в базу? Если да, то введите y, если нет, то e на английском языке.");

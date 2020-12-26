@@ -50,11 +50,5 @@ public class Account {
             return Arrays.stream(AccountStatus.values()).findFirst().filter(accountStatus1 -> accountStatus1.getId() == id).get();
         }
 
-        @Override
-        public String toString() {
-            return "AccountStatus{" +
-                    "id=" + id +
-                    '}';
-        }
     }
 }

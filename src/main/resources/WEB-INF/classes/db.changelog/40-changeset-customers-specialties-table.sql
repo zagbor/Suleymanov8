@@ -1,4 +1,4 @@
-  create TABLE `suleimanov`.`customers_specialties` (
+  create TABLE `customers_specialties` (
   `customer_id` INT NOT NULL,
   `specialty_id` INT NOT NULL,
    CONSTRAINT  FOREIGN KEY (customer_id) REFERENCES customers(id) ON delete CASCADE  ON update CASCADE,
