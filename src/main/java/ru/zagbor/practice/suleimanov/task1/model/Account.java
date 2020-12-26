@@ -1,5 +1,7 @@
 package ru.zagbor.practice.suleimanov.task1.model;
 
+import java.util.Arrays;
+
 public class Account {
     private long id;
     private AccountStatus accountStatus;
@@ -29,8 +31,30 @@ public class Account {
     }
 
     public enum AccountStatus {
-        ACTIVE,
-        BANNED,
-        DELETED
+
+        ACTIVE(1),
+        BANNED(2),
+        DELETED(3);
+
+        public int getId() {
+            return id;
+        }
+
+        private int id;
+
+        AccountStatus(int id) {
+            this.id = id;
+        }
+
+        public static AccountStatus fromId(int id) {
+            return Arrays.stream(AccountStatus.values()).findFirst().filter(accountStatus1 -> accountStatus1.getId() == id).get();
+        }
+
+        @Override
+        public String toString() {
+            return "AccountStatus{" +
+                    "id=" + id +
+                    '}';
+        }
     }
 }

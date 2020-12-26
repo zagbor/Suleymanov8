@@ -13,6 +13,7 @@ import ru.zagbor.practice.suleimanov.task1.utils.UtilsPrint;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,11 +30,11 @@ public class EditMenu implements Menu {
     }
 
     @Override
-    public void execute() throws IOException {
+    public void execute() throws IOException, SQLException {
         chooseCustomerPanel();
     }
 
-    private void chooseCustomerPanel() throws IOException {
+    private void chooseCustomerPanel() throws IOException, SQLException {
         while (true) {
             utilsPrint.showAllListCustomers();
             System.out.println("Чтобы увидеть и/или отредактировать всю информацию по определенному клиенту введите его ID.");
@@ -52,7 +53,7 @@ public class EditMenu implements Menu {
 
     }
 
-    private void editPanel(long id) throws IOException {
+    private void editPanel(long id) throws IOException, SQLException {
         while (true) {
             Customer customer = customerController.getCustomerForID(id).get();
             utilsPrint.showCustomer(customer);
@@ -79,7 +80,7 @@ public class EditMenu implements Menu {
         }
     }
 
-    private void editAccountStatusPanel(long id) throws IOException {
+    private void editAccountStatusPanel(long id) throws IOException, SQLException {
         while (true) {
             Customer customer = customerController.getCustomerForID(id).get();
             System.out.println("Вы хотите изменить статус аккаунта данного клиента, вот список возможных вариантов статусов," +
@@ -111,7 +112,7 @@ public class EditMenu implements Menu {
 
     }
 
-    private void editSpecialtyPanel(long id) throws IOException {
+    private void editSpecialtyPanel(long id) throws IOException, SQLException {
         while (true) {
             Customer customer = customerController.getCustomerForID(id).get();
             utilsPrint.showCustomer(customer);
@@ -136,7 +137,7 @@ public class EditMenu implements Menu {
         }
     }
 
-    private void deleteSpecialtyPanel(long id) throws IOException {
+    private void deleteSpecialtyPanel(long id) throws IOException, SQLException {
         while (true) {
             Customer customer = customerController.getCustomerForID(id).get();
             System.out.println("Вы хотите удалить специальность у данного клиента, вот список специальностей, которые Вы можете удалить:");
@@ -162,7 +163,7 @@ public class EditMenu implements Menu {
         }
     }
 
-    private void addSpecialtyPanel(long id) throws IOException {
+    private void addSpecialtyPanel(long id) throws IOException, SQLException {
         while (true) {
             Customer customer = customerController.getCustomerForID(id).get();
             System.out.println("Вы хотите добавить специальность данному клиенту, вот список специальностей, которые Вы можете добавить:");
@@ -189,7 +190,7 @@ public class EditMenu implements Menu {
         }
     }
 
-    private void changeNamePanel(long id) throws IOException {
+    private void changeNamePanel(long id) throws IOException, SQLException {
         while (true) {
             Customer customer = customerController.getCustomerForID(id).get();
             System.out.println("Введите новое имя для пользователя: \nили введите \"e\" на английской раскладке, чтобы вернуться назад.");

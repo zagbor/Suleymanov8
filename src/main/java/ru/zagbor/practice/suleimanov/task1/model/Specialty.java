@@ -1,7 +1,10 @@
 package ru.zagbor.practice.suleimanov.task1.model;
 
+import lombok.Builder;
+
 import java.util.Objects;
 
+@Builder
 public class Specialty {
     private long id;
     private String name;

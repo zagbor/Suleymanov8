@@ -3,6 +3,7 @@ package ru.zagbor.practice.suleimanov.task1.view;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 
 public class GeneralMenu implements Menu {
 
@@ -12,18 +13,18 @@ public class GeneralMenu implements Menu {
     }
 
     @Override
-    public void execute() throws IOException {
+    public void execute() throws IOException, SQLException {
         panelGenerator();
     }
 
-    private void panelGenerator() throws IOException {
+    private void panelGenerator() throws IOException, SQLException {
         System.out.println("Вы находитесь в приложении, которое может показывать и редактировать всю информацию о клиентах.");
         while (true) {
             generalPanel();
         }
     }
 
-    private void generalPanel() throws IOException {
+    private void generalPanel() throws IOException, SQLException {
         while (true) {
             System.out.println("Введите в консоль номер действия:");
             System.out.println("1. Посмотреть/отредактировать данные клиентов.");

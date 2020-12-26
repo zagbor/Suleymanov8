@@ -13,6 +13,7 @@ import ru.zagbor.practice.suleimanov.task1.utils.UtilsPrint;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -28,11 +29,11 @@ public class AddDeleteCusomersMenu implements Menu {
     }
 
     @Override
-    public void execute() throws IOException {
+    public void execute() throws IOException, SQLException {
         chooseAddOrDeleter();
     }
 
-    private void chooseAddOrDeleter() throws IOException {
+    private void chooseAddOrDeleter() throws IOException, SQLException {
         while (true) {
             System.out.println("Если вы хотите добавить клиента, то введите 1. " +
                     "\nЕсли удалить то введите 2.");
@@ -55,7 +56,7 @@ public class AddDeleteCusomersMenu implements Menu {
         }
     }
 
-    private void addCustomerPanel() throws IOException {
+    private void addCustomerPanel() throws IOException, SQLException {
         while (true) {
             Customer customer = new Customer();
             System.out.println("Чтобы создать пользователя введите его имя.");
@@ -74,7 +75,7 @@ public class AddDeleteCusomersMenu implements Menu {
         }
     }
 
-    private boolean addSpecialties(Customer customer) throws IOException {
+    private boolean addSpecialties(Customer customer) throws IOException, SQLException {
         Set<Specialty> specialties = new HashSet<>();
         while (true) {
             System.out.println("Теперь необходимо добавить пользователю специальности.\nУ клиента их может быть несколько, но не меньше одной." +
@@ -111,7 +112,7 @@ public class AddDeleteCusomersMenu implements Menu {
         }
     }
 
-    private void deleteCustomerPanel() throws IOException {
+    private void deleteCustomerPanel() throws IOException, SQLException {
         while (true) {
             System.out.println("Вы хотите удалить пользвателя. Вот список пользователей:");
             utilsPrint.showAllListCustomers();
@@ -131,7 +132,7 @@ public class AddDeleteCusomersMenu implements Menu {
         }
     }
 
-    private boolean addAccountStatus(Customer customer) throws IOException {
+    private boolean addAccountStatus(Customer customer) throws IOException, SQLException {
         while (true) {
             System.out.println("Теперь необходимо добавить пользователю статус аккаунта. " +
                     "Вот список специальностей, которые Вы можете добавить:");
@@ -159,7 +160,7 @@ public class AddDeleteCusomersMenu implements Menu {
         }
     }
 
-    private boolean saveClientPanel(Customer customer) throws IOException {
+    private boolean saveClientPanel(Customer customer) throws IOException, SQLException {
         while (true) {
             System.out.println("Если хотите сохранить данного клиента в базу введите на английской раскладке \"y\", если хотите выйти назад, то \"e\"");
             utilsPrint.showCustomerLessId(customer);

@@ -8,6 +8,7 @@ import ru.zagbor.practice.suleimanov.task1.model.Customer;
 import ru.zagbor.practice.suleimanov.task1.model.Specialty;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 
@@ -40,7 +41,7 @@ public class UtilsPrint {
                 customer.getName(), customer.toStringSpecialties(), customer.getAccount().getAccountStatus());
     }
 
-    public void showAllListCustomers() throws IOException {
+    public void showAllListCustomers() throws IOException, SQLException {
         System.out.printf("%-5s%-11s%-20s%-11s%n", "ID", "Имя", "Номер аккаунта", "Состояние аккаунта");
         customerController.getAll().stream().forEach(customer -> System.out.printf("%-5d%-11s%-20d%-11s%n",
                 customer.getId(), customer.getName(), customer.getAccount().getId(), customer.getAccount().getAccountStatus()));

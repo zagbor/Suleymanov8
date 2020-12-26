@@ -10,6 +10,7 @@ import ru.zagbor.practice.suleimanov.task1.utils.UtilsPrint;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 
 public class AddDeleteSpecialtiesMenu implements Menu {
     private final static BufferedReader BUFFERED_READER = new BufferedReader(new InputStreamReader(System.in));
@@ -20,11 +21,11 @@ public class AddDeleteSpecialtiesMenu implements Menu {
     }
 
     @Override
-    public void execute() throws IOException {
+    public void execute() throws IOException, SQLException {
         chooseAddOrDelete();
     }
 
-    private void chooseAddOrDelete() throws IOException {
+    private void chooseAddOrDelete() throws IOException, SQLException {
         while (true) {
             System.out.println("Если вы хотите добавить специальность, то введите 1. " +
                     "\nЕсли удалить то введите 2.");
@@ -47,7 +48,7 @@ public class AddDeleteSpecialtiesMenu implements Menu {
         }
     }
 
-    private void addCustomerPanel() throws IOException {
+    private void addCustomerPanel() throws IOException, SQLException {
         while (true) {
             Specialty specialty = new Specialty();
             System.out.println("Чтобы добавить специальность введите её имя.");
@@ -62,7 +63,7 @@ public class AddDeleteSpecialtiesMenu implements Menu {
         }
     }
 
-    private void deleteCustomerPanel() throws IOException {
+    private void deleteCustomerPanel() throws IOException, SQLException {
         while (true) {
             System.out.println("Вы хотите удалить специальность. Вот список специальностей:");
             utilsPrint.showSetSpecialties(specialtyController.getAll());

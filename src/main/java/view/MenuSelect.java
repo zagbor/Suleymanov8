@@ -2,6 +2,7 @@ package view;
 
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class MenuSelect {
     Menu menu;
@@ -10,7 +11,7 @@ public class MenuSelect {
         this.menu = menu;
     }
 
-    public void executePlay() throws IOException {
+    public void executePlay() throws IOException, SQLException {
         menu.execute();
     }
 }
