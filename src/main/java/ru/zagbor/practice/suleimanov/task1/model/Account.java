@@ -1,7 +1,14 @@
 package ru.zagbor.practice.suleimanov.task1.model;
 
-import java.util.Arrays;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@AllArgsConstructor
+@Builder
 public class Account {
     private long id;
     private AccountStatus accountStatus;
@@ -17,10 +24,6 @@ public class Account {
     public Account() {
     }
 
-    public Account(long id, AccountStatus accountStatus) {
-        this.id = id;
-        this.accountStatus = accountStatus;
-    }
 
     public AccountStatus getAccountStatus() {
         return accountStatus;
@@ -47,8 +50,10 @@ public class Account {
         }
 
         public static AccountStatus fromId(int id) {
-            return Arrays.stream(AccountStatus.values()).findFirst().filter(accountStatus1 -> accountStatus1.getId() == id).get();
+            return Arrays.stream(AccountStatus.values()).filter(accountStatus1 ->
+                    accountStatus1.getId() == id).findFirst().orElse(null);
         }
+
 
     }
 }

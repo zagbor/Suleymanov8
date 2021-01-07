@@ -5,11 +5,13 @@ import java.sql.SQLException;
 
 public class UtilsParse {
 
-    public static Long idParser(CachedRowSet cachedRowSet) throws SQLException {
-        Long l = null;
-        while (cachedRowSet.next()) {
-            l = cachedRowSet.getLong("id");
+
+    public static long parseLong(String s) {
+        try {
+            return Long.parseLong(s);
+        } catch (NumberFormatException e) {
+            return -1;
         }
-        return l;
     }
+
 }

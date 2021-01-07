@@ -9,7 +9,7 @@ public class GeneralMenu implements Menu {
 
     private final static BufferedReader BUFFERED_READER = new BufferedReader(new InputStreamReader(System.in));
 
-    public GeneralMenu() throws IOException {
+    public GeneralMenu() {
     }
 
     @Override

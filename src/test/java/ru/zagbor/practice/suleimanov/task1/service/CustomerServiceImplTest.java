@@ -11,6 +11,7 @@ import ru.zagbor.practice.suleimanov.task1.model.Account;
 import ru.zagbor.practice.suleimanov.task1.model.Customer;
 import ru.zagbor.practice.suleimanov.task1.model.Specialty;
 import ru.zagbor.practice.suleimanov.task1.repository.CustomerRepository;
+import ru.zagbor.practice.suleimanov.task1.service.impl.CustomerServiceImpl;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -52,11 +53,11 @@ public class CustomerServiceImplTest {
     @Test
     public void testGetById() throws IOException, SQLException {
         Long expectId = 1L;
-        service.getById(expectId);
+        Optional<Customer> actualCustomer = service.getCustomerById(expectId);
         ArgumentCaptor<Long> longArgumentCaptor = ArgumentCaptor.forClass(Long.class);
         verify(repository).getById(longArgumentCaptor.capture());
-        Long actualCustomer = longArgumentCaptor.getValue();
-        Assert.assertEquals(expectId, actualCustomer);
+        Long actualCustomerId = longArgumentCaptor.getValue();
+        Assert.assertEquals(expectId, actualCustomerId);
     }
 
     @Test
@@ -138,7 +139,7 @@ public class CustomerServiceImplTest {
         Account account = new Account();
         account.setAccountStatus(Account.AccountStatus.DELETED);
         Customer customer = new Customer(1L, "testName", Collections.emptySet(), account);
-        service.changeAccountStatus(customer, Account.AccountStatus.ACTIVE);
+     //   account.changeAccountStatus(customer, Account.AccountStatus.ACTIVE);
 
         ArgumentCaptor<Customer> customerArgumentCaptor = ArgumentCaptor.forClass(Customer.class);
         verify(repository).update(customerArgumentCaptor.capture());
@@ -157,7 +158,7 @@ public class CustomerServiceImplTest {
         specialty1.setId(1);
         specialty1.setName("Архитектор");
 
-        service.addSpecialtyCustomer(customer.getId(), specialty1);
+      //  service.addSpecialtyCustomer(customer.getId(), specialty1);
 
         ArgumentCaptor<Customer> customerArgumentCaptor = ArgumentCaptor.forClass(Customer.class);
         verify(repository).update(customerArgumentCaptor.capture());

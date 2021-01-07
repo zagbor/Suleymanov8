@@ -1,13 +1,11 @@
 package view;
 
 import ru.zagbor.practice.suleimanov.task1.controller.CustomerController;
-import ru.zagbor.practice.suleimanov.task1.controller.CustomerControllerImpl;
-import ru.zagbor.practice.suleimanov.task1.controller.SpecialtyControllerImpl;
 import ru.zagbor.practice.suleimanov.task1.controller.SpecialtyController;
 import ru.zagbor.practice.suleimanov.task1.model.Account;
 import ru.zagbor.practice.suleimanov.task1.model.Customer;
 import ru.zagbor.practice.suleimanov.task1.model.Specialty;
-import ru.zagbor.practice.suleimanov.task1.utils.Utils;
+import ru.zagbor.practice.suleimanov.task1.utils.UtilsParse;
 import ru.zagbor.practice.suleimanov.task1.utils.UtilsPrint;
 
 import java.io.BufferedReader;
@@ -21,8 +19,8 @@ import java.util.Set;
 public class AddDeleteCusomersMenu implements Menu {
     private final static BufferedReader BUFFERED_READER = new BufferedReader(new InputStreamReader(System.in));
     private final UtilsPrint utilsPrint = new UtilsPrint();
-    private final CustomerController customerController = new CustomerControllerImpl();
-    private final SpecialtyController specialtyController = new SpecialtyControllerImpl();
+    private final CustomerController customerController = new CustomerController();
+    private final SpecialtyController specialtyController = new SpecialtyController();
 
     public AddDeleteCusomersMenu() throws IOException {
 
@@ -84,7 +82,7 @@ public class AddDeleteCusomersMenu implements Menu {
             if (customer.getSpecialties() == null) {
                 utilsPrint.showSetSpecialties(specialtyController.getAll());
             } else {
-                utilsPrint.showSetSpecialties(specialtyController.findWhichCanAdd(customer.getSpecialties()));
+                utilsPrint.showSetSpecialties(specialtyController.specialtiesWhichCanAdd(customer.getSpecialties()));
             }
             System.out.println("Введите ID специальности, которую хотите добавить");
             System.out.println("Введите \"e\" на английской раскладке, чтобы вернуться назад");
@@ -101,7 +99,7 @@ public class AddDeleteCusomersMenu implements Menu {
                 }
 
             }
-            long id = Utils.parseLong(maybeId);
+            long id = UtilsParse.parseLong(maybeId);
             if (id == -1 || !specialtyController.isSpecialtyExist(id)) {
                 System.err.println("Вы выбрали вариант, которого не существует или не добавили ни одной специальности, попробуйте еще раз.");
                 continue;
@@ -119,7 +117,7 @@ public class AddDeleteCusomersMenu implements Menu {
             System.out.println("Чтобы удалить пользователя введите номер его ID.");
             System.out.println("Введите \"e\" на английской раскладке, чтобы вернуться назад.");
             String maybeId = BUFFERED_READER.readLine();
-            long id = Utils.parseLong(maybeId);
+            long id = UtilsParse.parseLong(maybeId);
             if (maybeId.equals("e")) {
                 break;
             }

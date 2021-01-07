@@ -2,7 +2,6 @@ package utils;
 
 
 import ru.zagbor.practice.suleimanov.task1.controller.CustomerController;
-import ru.zagbor.practice.suleimanov.task1.controller.CustomerControllerImpl;
 import ru.zagbor.practice.suleimanov.task1.model.Account;
 import ru.zagbor.practice.suleimanov.task1.model.Customer;
 import ru.zagbor.practice.suleimanov.task1.model.Specialty;
@@ -14,7 +13,7 @@ import java.util.Set;
 
 
 public class UtilsPrint {
-    private final CustomerController customerController = new CustomerControllerImpl();
+    private final CustomerController customerController = new CustomerController();
 
     public UtilsPrint() throws IOException {
     }

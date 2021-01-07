@@ -1,13 +1,12 @@
 package ru.zagbor.practice.suleimanov.task1.view;
 
+import ru.zagbor.practice.suleimanov.task1.controller.AccountController;
 import ru.zagbor.practice.suleimanov.task1.controller.CustomerController;
-import ru.zagbor.practice.suleimanov.task1.controller.CustomerControllerImpl;
-import ru.zagbor.practice.suleimanov.task1.controller.SpecialtyControllerImpl;
 import ru.zagbor.practice.suleimanov.task1.controller.SpecialtyController;
 import ru.zagbor.practice.suleimanov.task1.model.Account;
 import ru.zagbor.practice.suleimanov.task1.model.Customer;
 import ru.zagbor.practice.suleimanov.task1.model.Specialty;
-import ru.zagbor.practice.suleimanov.task1.utils.Utils;
+import ru.zagbor.practice.suleimanov.task1.utils.UtilsParse;
 import ru.zagbor.practice.suleimanov.task1.utils.UtilsPrint;
 
 import java.io.BufferedReader;
@@ -21,8 +20,9 @@ import java.util.Set;
 
 public class EditMenu implements Menu {
     private final static BufferedReader BUFFERED_READER = new BufferedReader(new InputStreamReader(System.in));
-    private final SpecialtyController specialtyController = new SpecialtyControllerImpl();
-    private final CustomerController customerController = new CustomerControllerImpl();
+    private final SpecialtyController specialtyController = new SpecialtyController();
+    private final CustomerController customerController = new CustomerController();
+    private final AccountController accountController = new AccountController();
     private final UtilsPrint utilsPrint = new UtilsPrint();
 
 
@@ -43,7 +43,7 @@ public class EditMenu implements Menu {
             if (maybeId.equals("e")) {
                 break;
             }
-            long id = Utils.parseLong(maybeId);
+            long id = UtilsParse.parseLong(maybeId);
             if (id == -1 || !customerController.isCustomerExist(id)) {
                 System.err.println("Вы выбрали вариант, которого не существует, попробуйте еще раз.");
                 continue;
@@ -105,7 +105,7 @@ public class EditMenu implements Menu {
                 System.err.println("Вы ввели статус, который уже присвоен клиенту.");
                 continue;
             }
-            customerController.changeAccountStatus(customer, Account.AccountStatus.valueOf(maybeAccountStatus));
+            accountController.changeAccountStatus(customer.getAccount(), Account.AccountStatus.valueOf(maybeAccountStatus));
             System.out.println("Вы изменили статус");
             break;
         }
@@ -148,7 +148,7 @@ public class EditMenu implements Menu {
             if (maybeIdSpecialty.equals("e")) {
                 break;
             }
-            long idSpecialty = Utils.parseLong(maybeIdSpecialty);
+            long idSpecialty = UtilsParse.parseLong(maybeIdSpecialty);
             if (idSpecialty == -1) {
                 System.err.println("Вы ввели не число");
                 continue;
@@ -158,7 +158,7 @@ public class EditMenu implements Menu {
                 System.err.println("Вы ввели ID, который невозможно удалить");
                 continue;
             }
-            customerController.deleteSpecialtyCustomer(customer, specialtyController.getSpecialtyForId(idSpecialty).get());
+            specialtyController.deleteSpecialtyCustomer(idSpecialty, customer.getId());
             break;
         }
     }
@@ -167,7 +167,7 @@ public class EditMenu implements Menu {
         while (true) {
             Customer customer = customerController.getCustomerForID(id).get();
             System.out.println("Вы хотите добавить специальность данному клиенту, вот список специальностей, которые Вы можете добавить:");
-            Set<Specialty> whichCanAdd = specialtyController.findWhichCanAdd(customer.getSpecialties());
+            Set<Specialty> whichCanAdd = specialtyController.specialtiesWhichCanAdd(customer.getSpecialties());
             utilsPrint.showSetSpecialties(whichCanAdd);
             System.out.println("Введите ID специальности, которую хотите добавить клиенту");
             System.out.println("Введите \"e\" на английской раскладке, чтобы вернуться назад.");
@@ -175,7 +175,7 @@ public class EditMenu implements Menu {
             if (maybeIdSpecialty.equals("e")) {
                 break;
             }
-            long idSpecialty = Utils.parseLong(maybeIdSpecialty);
+            long idSpecialty = UtilsParse.parseLong(maybeIdSpecialty);
             if (idSpecialty == -1) {
                 System.err.println("Вы ввели не число");
                 continue;
@@ -185,12 +185,12 @@ public class EditMenu implements Menu {
                 System.err.println("Вы ввели ID, который невозможно добавить");
                 continue;
             }
-            customerController.addSpecialtyCustomer(customer.getId(), specialtyController.getSpecialtyForId(idSpecialty).get());
+            specialtyController.addSpecialtyCustomer(customer, idSpecialty);
             break;
         }
     }
 
-    private void changeNamePanel(long id) throws IOException, SQLException {
+    private void changeNamePanel(long id) throws IOException {
         while (true) {
             Customer customer = customerController.getCustomerForID(id).get();
             System.out.println("Введите новое имя для пользователя: \nили введите \"e\" на английской раскладке, чтобы вернуться назад.");

@@ -2,19 +2,21 @@ package ru.zagbor.practice.suleimanov.task1.repository;
 
 import ru.zagbor.practice.suleimanov.task1.model.Specialty;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Set;
 
 public interface SpecialtyRepository extends GenericRepository<Specialty, Long> {
 
+    void deleteSpecialtyCustomer(Long specialtyId, Long customerId);
 
-    String specialtiesToStringForBase(Set<Specialty> specialties);
+    boolean isSpecialtyExist(long id);
 
-    Set<Specialty> findWhichCanAdd(Set<Specialty> specialtiesCustomer) throws IOException, SQLException;
+    Set<Specialty> getAll();
 
-    boolean isSpecialtyExist(long id) throws IOException, SQLException;
+    Set<Specialty> getSpecialtiesCustomer(Long id);
 
-    Set<Specialty> getAll() throws IOException, SQLException;
+    void saveSpecialtiesInCustomers(Long id, Set<Specialty> specialties);
+
+    void updateSpecialtyInCustomer(Long customerId, Long specialtyId);
+
 
 }

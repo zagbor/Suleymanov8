@@ -7,15 +7,15 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface GenericRepository<T, ID> {
-    Optional<T> getById(ID id) throws IOException, SQLException;
+    Optional<T> getById(ID id);
 
-    Collection<T> getAll() throws IOException, SQLException;
+    Collection<T> getAll() ;
 
-    T update(T t) throws IOException, SQLException;
+    T update(T t);
 
-    T create(T t) throws IOException, SQLException;
+    T create(T t);
 
-    void deleteById(ID id) throws IOException, SQLException;
+    void deleteById(ID id);
 
 
 }

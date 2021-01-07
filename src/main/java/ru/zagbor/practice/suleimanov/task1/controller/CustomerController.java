@@ -1,34 +1,53 @@
 package ru.zagbor.practice.suleimanov.task1.controller;
 
-
-import ru.zagbor.practice.suleimanov.task1.model.Account;
+import ru.zagbor.practice.suleimanov.task1.service.CustomerService;
+import ru.zagbor.practice.suleimanov.task1.service.impl.CustomerServiceImpl;
 import ru.zagbor.practice.suleimanov.task1.model.Customer;
 import ru.zagbor.practice.suleimanov.task1.model.Specialty;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public interface CustomerController {
 
-    void create(Customer customer) throws IOException, SQLException;
+public class CustomerController{
 
-    List<Customer> getAll() throws IOException, SQLException;
+    private final CustomerService customerService = new CustomerServiceImpl();
 
-    Optional<Customer> getCustomerForID(long id) throws IOException, SQLException;
-
-    boolean isCustomerExist(long id) throws IOException, SQLException;
-
-    void deleteCustomerForID(long id) throws IOException, SQLException;
-
-    void changeName(Customer customer, String name) throws IOException, SQLException;
-
-    void addSpecialtyCustomer(long customerId, Specialty specialty) throws IOException, SQLException;
-
-    void changeAccountStatus(Customer customer, Account.AccountStatus accountStatus) throws IOException, SQLException;
-
-    void deleteSpecialtyCustomer(Customer customer, Specialty specialty) throws IOException, SQLException;
+    public CustomerController() {
+    }
 
 
+    public void create(Customer customer) {
+        customerService.create(customer);
+    }
+
+
+    public List<Customer> getAll()  {
+        return customerService.getAll();
+    }
+
+
+    public Optional<Customer> getCustomerForID(long id) {
+        return customerService.getCustomerById(id);
+
+    }
+    public boolean isCustomerExist(long id) {
+        return customerService.isCustomerExist(id);
+    }
+
+
+    public void deleteCustomerForID(long id) {
+        customerService.deleteById(id);
+    }
+
+
+    public void changeName(Customer customer, String name) {
+        customerService.changeName(customer, name);
+    }
+
+    public void deleteSpecialtyCustomer(Customer customer, Specialty specialty) {
+        customerService.deleteSpecialtyCustomer(customer, specialty);
+    }
 }
+
+

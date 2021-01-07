@@ -2,7 +2,6 @@ package ru.zagbor.practice.suleimanov.task1.utils;
 
 
 import ru.zagbor.practice.suleimanov.task1.controller.CustomerController;
-import ru.zagbor.practice.suleimanov.task1.controller.CustomerControllerImpl;
 import ru.zagbor.practice.suleimanov.task1.model.Account;
 import ru.zagbor.practice.suleimanov.task1.model.Customer;
 import ru.zagbor.practice.suleimanov.task1.model.Specialty;
@@ -14,7 +13,7 @@ import java.util.Set;
 
 
 public class UtilsPrint {
-    private final CustomerController customerController = new CustomerControllerImpl();
+    private final CustomerController customerController = new CustomerController();
 
     public UtilsPrint() throws IOException {
     }
@@ -41,7 +40,7 @@ public class UtilsPrint {
                 customer.getName(), customer.toStringSpecialties(), customer.getAccount().getAccountStatus());
     }
 
-    public void showAllListCustomers() throws IOException, SQLException {
+    public void showAllListCustomers(){
         System.out.printf("%-5s%-11s%-20s%-11s%n", "ID", "Имя", "Номер аккаунта", "Состояние аккаунта");
         customerController.getAll().stream().forEach(customer -> System.out.printf("%-5d%-11s%-20d%-11s%n",
                 customer.getId(), customer.getName(), customer.getAccount().getId(), customer.getAccount().getAccountStatus()));

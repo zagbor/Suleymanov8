@@ -1,16 +1,20 @@
 package ru.zagbor.practice.suleimanov.task1.utils;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class Utils {
 
 
     public Utils() {
     }
 
-    public static long parseLong(String s) {
-        try {
-            return Long.parseLong(s);
-        } catch (NumberFormatException e) {
-            return -1;
-        }
+    public static Long getId(Statement statement) throws SQLException {
+        ResultSet resultSet = statement.getGeneratedKeys();
+        resultSet.first();
+        return resultSet.getLong(1);
+
     }
 
 

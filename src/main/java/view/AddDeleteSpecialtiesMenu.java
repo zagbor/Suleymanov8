@@ -1,10 +1,10 @@
 package view;
 
 
-import ru.zagbor.practice.suleimanov.task1.controller.SpecialtyControllerImpl;
 import ru.zagbor.practice.suleimanov.task1.controller.SpecialtyController;
 import ru.zagbor.practice.suleimanov.task1.model.Specialty;
 import ru.zagbor.practice.suleimanov.task1.utils.Utils;
+import ru.zagbor.practice.suleimanov.task1.utils.UtilsParse;
 import ru.zagbor.practice.suleimanov.task1.utils.UtilsPrint;
 
 import java.io.BufferedReader;
@@ -14,7 +14,7 @@ import java.sql.SQLException;
 
 public class AddDeleteSpecialtiesMenu implements Menu {
     private final static BufferedReader BUFFERED_READER = new BufferedReader(new InputStreamReader(System.in));
-    private final SpecialtyController specialtyController = new SpecialtyControllerImpl();
+    private final SpecialtyController specialtyController = new SpecialtyController();
     UtilsPrint utilsPrint = new UtilsPrint();
 
     public AddDeleteSpecialtiesMenu() throws IOException {
@@ -71,7 +71,7 @@ public class AddDeleteSpecialtiesMenu implements Menu {
             System.out.println("Помните, если вы удалите специальность, то она исчезнет у всех пользователей, где она была добавлена.");
             System.out.println("Введите \"e\" на английской раскладке, чтобы вернуться назад.");
             String maybeId = BUFFERED_READER.readLine();
-            long id = Utils.parseLong(maybeId);
+            long id = UtilsParse.parseLong(maybeId);
             if (maybeId.equals("e")) {
                 break;
             }
