@@ -8,17 +8,10 @@ public class ConnectionFactory {
 
     private static DatabaseConnectionsProperties properties;
 
-    static boolean isConnectionPossible() throws SQLException {
 
-            DriverManager.getConnection(properties.getUrl(), properties.getUsername(), properties.getPassword());
-            return true;
-
-
-
-    }
-
-    public static void init(DatabaseConnectionsProperties properties) {
+    public static void init(DatabaseConnectionsProperties properties) throws SQLException {
         ConnectionFactory.properties = properties;
+
     }
 
 
@@ -27,6 +20,15 @@ public class ConnectionFactory {
             return DriverManager.getConnection(properties.getUrl(), properties.getUsername(), properties.getPassword());
         } catch (SQLException e) {
             throw new IllegalStateException();
+        }
+    }
+
+    public static boolean checkProperties(DatabaseConnectionsProperties properties) {
+        try {
+            DriverManager.getConnection(properties.getUrl(), properties.getUsername(), properties.getPassword());
+            return true;
+        } catch (SQLException e) {
+            return false;
         }
     }
 }

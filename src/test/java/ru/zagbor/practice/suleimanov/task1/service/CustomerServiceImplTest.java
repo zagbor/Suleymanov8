@@ -37,7 +37,7 @@ public class CustomerServiceImplTest {
 
 //???????
     @Test
-    public void testGetAll() throws IOException, SQLException {
+    public void testGetAll(){
         List<Customer> expectedCustomers = List.of(new Customer());
         when(repository.getAll()).
                 thenReturn(expectedCustomers);
@@ -51,7 +51,7 @@ public class CustomerServiceImplTest {
     }
 
     @Test
-    public void testGetById() throws IOException, SQLException {
+    public void testGetById(){
         Long expectId = 1L;
         Optional<Customer> actualCustomer = service.getCustomerById(expectId);
         ArgumentCaptor<Long> longArgumentCaptor = ArgumentCaptor.forClass(Long.class);
@@ -61,7 +61,7 @@ public class CustomerServiceImplTest {
     }
 
     @Test
-    public void testDeleteById() throws IOException, SQLException {
+    public void testDeleteById() {
         Long expectId = 1L;
         service.deleteById(expectId);
         ArgumentCaptor<Long> longArgumentCaptor = ArgumentCaptor.forClass(Long.class);
@@ -71,7 +71,7 @@ public class CustomerServiceImplTest {
     }
 
     @Test
-    public void testCreate() throws IOException, SQLException {
+    public void testCreate() {
         Customer customer = new Customer();
         customer.setId(1);
         customer.setAccount(new Account());
@@ -86,7 +86,7 @@ public class CustomerServiceImplTest {
     }
 
     @Test
-    public void testDeleteSpecialtyCustomer() throws IOException, SQLException {
+    public void testDeleteSpecialtyCustomer(){
         AtomicLong specialtiesIdSequence = new AtomicLong(System.currentTimeMillis());
 
         Set<Specialty> expectedSpecialtySet = new HashSet<>();
@@ -116,7 +116,7 @@ public class CustomerServiceImplTest {
     }
 
     @Test
-    public void testChangeName() throws IOException, SQLException {
+    public void testChangeName() {
 
         Customer customer = new Customer(1L, "testName", Collections.emptySet(), new Account());
         String expectedName = "expectName";
@@ -135,7 +135,7 @@ public class CustomerServiceImplTest {
     }
 
     @Test
-    public void testChangeAccountStatus() throws IOException, SQLException {
+    public void testChangeAccountStatus() {
         Account account = new Account();
         account.setAccountStatus(Account.AccountStatus.DELETED);
         Customer customer = new Customer(1L, "testName", Collections.emptySet(), account);
@@ -148,7 +148,7 @@ public class CustomerServiceImplTest {
     }
 
     @Test
-    public void testAddSpecialtyCustomer() throws IOException, SQLException {
+    public void testAddSpecialtyCustomer() {
         Customer customer = new Customer(1L, "testName", new HashSet<>(), new Account());
 
         when(repository.getById(anyLong()))
@@ -167,7 +167,7 @@ public class CustomerServiceImplTest {
     }
 
     @Test
-    public void testIsCustomerExist() throws IOException, SQLException {
+    public void testIsCustomerExist()  {
         Long expectId = 1L;
         service.isCustomerExist(expectId);
         ArgumentCaptor<Long> longArgumentCaptor = ArgumentCaptor.forClass(Long.class);

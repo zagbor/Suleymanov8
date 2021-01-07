@@ -5,7 +5,7 @@ import ru.zagbor.practice.suleimanov.task1.model.Customer;
 import ru.zagbor.practice.suleimanov.task1.model.Specialty;
 import ru.zagbor.practice.suleimanov.task1.repository.CustomerRepository;
 import ru.zagbor.practice.suleimanov.task1.repository.StatementFactory;
-import ru.zagbor.practice.suleimanov.task1.repository.queries.QueriesCustomer;
+import ru.zagbor.practice.suleimanov.task1.repository.queries.CustomerQueries;
 import ru.zagbor.practice.suleimanov.task1.utils.Utils;
 
 import java.sql.ResultSet;
@@ -18,15 +18,11 @@ import java.util.Optional;
 public class CustomerRepositoryImpl implements CustomerRepository {
 
 
-    public CustomerRepositoryImpl() {
-
-    }
-
 
     @Override
     public Customer update(Customer customer) {
         try (Statement statement = StatementFactory.getStatement()) {
-            statement.executeUpdate(QueriesCustomer.UPDATE_CUSTOMER.formatSql(
+            statement.executeUpdate(CustomerQueries.UPDATE_CUSTOMER.formatSql(
                     customer.getId(),
                     customer.getName(),
                     customer.getId()));
@@ -41,7 +37,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     public List<Customer> getAll() {
         try (Statement statement = StatementFactory.getStatement()) {
             List<Customer> customers = new ArrayList<>();
-            ResultSet customersSet = statement.executeQuery(QueriesCustomer.GET_ALL_CUSTOMERS.getQuery());
+            ResultSet customersSet = statement.executeQuery(CustomerQueries.GET_ALL_CUSTOMERS.getQuery());
             while (customersSet.next()) {
                 customers.add(CustomerMapper.customer(customersSet));
             }
@@ -55,7 +51,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     public Optional<Customer> getById(Long id) {
         Customer customer = null;
         try (Statement statement = StatementFactory.getStatement()) {
-            ResultSet resultSet = statement.executeQuery(QueriesCustomer.GET_CUSTOMER_BY_ID.formatSql(id));
+            ResultSet resultSet = statement.executeQuery(CustomerQueries.GET_CUSTOMER_BY_ID.formatSql(id));
             resultSet.next();
             customer = CustomerMapper.customer(resultSet);
         } catch (SQLException e) {
@@ -67,7 +63,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     @Override
     public void deleteById(Long id) {
         try (Statement statement = StatementFactory.getStatement()) {
-            statement.executeUpdate(QueriesCustomer.DELETE_CUSTOMER.formatSql(id));
+            statement.executeUpdate(CustomerQueries.DELETE_CUSTOMER.formatSql(id));
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
@@ -77,7 +73,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     @Override
     public Customer create(Customer customer) {
         try (Statement statement = StatementFactory.getStatement()) {
-            statement.executeUpdate(QueriesCustomer.CREATE_CUSTOMER.formatSql(
+            statement.executeUpdate(CustomerQueries.CREATE_CUSTOMER.formatSql(
                     customer.getName(), customer.getAccount().getId()), Statement.RETURN_GENERATED_KEYS);
             Long customerKey = Utils.getId(statement);
             customer.setId(customerKey);
@@ -97,7 +93,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     public boolean isCustomerExist(long id) {
         Statement statement = StatementFactory.getStatement();
         try {
-            ResultSet resultSet = statement.executeQuery(QueriesCustomer.IS_EXIST_CUSTOMER.formatSql(id));
+            ResultSet resultSet = statement.executeQuery(CustomerQueries.IS_EXIST_CUSTOMER.formatSql(id));
             resultSet.next();
             if (resultSet.getLong(1) == 1) {
                 return true;

@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum QueriesSpecialty {
+public enum SpecialtyQueries {
     GET_ALL_SPECIALTIES("SELECT * FROM specialties"),
     GET_ALL_SPECIALTIES_EXCEPT_HAVE_CUSTOMERS("" +
             "SELECT specialties.id as id, specialties.name as name FROM specialties " +

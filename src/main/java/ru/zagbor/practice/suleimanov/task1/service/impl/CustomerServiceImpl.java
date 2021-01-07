@@ -4,10 +4,10 @@ import ru.zagbor.practice.suleimanov.task1.model.Account;
 import ru.zagbor.practice.suleimanov.task1.model.Customer;
 import ru.zagbor.practice.suleimanov.task1.model.Specialty;
 import ru.zagbor.practice.suleimanov.task1.repository.AccountRepository;
-import ru.zagbor.practice.suleimanov.task1.repository.impl.AccountRepositoryImpl;
 import ru.zagbor.practice.suleimanov.task1.repository.CustomerRepository;
-import ru.zagbor.practice.suleimanov.task1.repository.impl.CustomerRepositoryImpl;
 import ru.zagbor.practice.suleimanov.task1.repository.SpecialtyRepository;
+import ru.zagbor.practice.suleimanov.task1.repository.impl.AccountRepositoryImpl;
+import ru.zagbor.practice.suleimanov.task1.repository.impl.CustomerRepositoryImpl;
 import ru.zagbor.practice.suleimanov.task1.repository.impl.SpecialtyRepositoryImpl;
 import ru.zagbor.practice.suleimanov.task1.service.CustomerService;
 
@@ -23,12 +23,17 @@ public class CustomerServiceImpl implements CustomerService {
     private final SpecialtyRepository specialtyRepository;
     private final AccountRepository accountRepository;
 
-
     public CustomerServiceImpl() {
-        customerRepository = new CustomerRepositoryImpl();
-        specialtyRepository = new SpecialtyRepositoryImpl();
-        accountRepository = new AccountRepositoryImpl();
+        this(new CustomerRepositoryImpl(), new SpecialtyRepositoryImpl(), new AccountRepositoryImpl());
     }
+
+    public CustomerServiceImpl(CustomerRepository customerRepository, SpecialtyRepository specialtyRepository,
+                               AccountRepository accountRepository) {
+        this.customerRepository = customerRepository;
+        this.specialtyRepository = specialtyRepository;
+        this.accountRepository = accountRepository;
+    }
+
 
     @Override
     public Customer update(Customer customer) {

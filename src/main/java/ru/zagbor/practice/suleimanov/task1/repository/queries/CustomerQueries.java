@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum  QueriesCustomer{
+public enum CustomerQueries {
     GET_CUSTOMER_BY_ID("SELECT * FROM customers WHERE id = %d"),
     CREATE_CUSTOMER("INSERT INTO customers (name, account_id) value ('%s', %d)"),
     IS_EXIST_CUSTOMER("SELECT EXISTS(SELECT id FROM customers WHERE id = %d)"),

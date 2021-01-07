@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum QueriesAccount {
+public enum AccountQueries {
 
     CREATE_ACCOUNT("INSERT INTO accounts (accountstatus_id) value (%d)"),
     UPDATE_ACCOUNT("UPDATE accounts SET  accountstatus_id = %d WHERE id = %d"),

@@ -16,18 +16,18 @@ public class DBInit {
     }
 
     private void execute() {
-
         DatabaseConnectionsProperties connectionsProperties = null;
         try {
             connectionsProperties = DatabaseConnectionsPropertiesManager.loadConnectionProperties();
+            boolean propertiesIsOK = ConnectionFactory.checkProperties(connectionsProperties);
+            if (!propertiesIsOK) {
+                connectionsProperties = dbController.getDataUser();
+                DatabaseConnectionsPropertiesManager.writeConnectionProperties(connectionsProperties);
+            }
             ConnectionFactory.init(connectionsProperties);
-            ConnectionFactory.isConnectionPossible();
-        } catch (IOException | IllegalStateException| SQLException s){
-            connectionsProperties = dbController.getDataUser();
-            DatabaseConnectionsPropertiesManager.writeConnectionProperties(connectionsProperties);
-            ConnectionFactory.init(connectionsProperties);
+        } catch (IOException | SQLException s) {
+            System.err.println("Что-то пошло не так...");
         }
-
         try {
             liquibaseVersionManager.initDatabaseSchema();
             boolean userDecision = dbController.getUserDecision();
