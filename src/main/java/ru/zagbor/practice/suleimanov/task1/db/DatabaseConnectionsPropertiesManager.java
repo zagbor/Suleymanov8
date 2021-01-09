@@ -1,57 +1,28 @@
 package ru.zagbor.practice.suleimanov.task1.db;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+public interface DatabaseConnectionsPropertiesManager {
 
-import static java.lang.String.format;
+    DatabaseConnectionsProperties loadDatabaseConnectionProperties() throws MissingDatabaseConnectionProperties;
 
-public class DatabaseConnectionsPropertiesManager {
+    public static class MissingDatabaseConnectionProperties extends Exception {
 
-    private static final String DEFAULT_FILE_NAME = "BaseInformation.txt";
-
-    public static void writeConnectionProperties(DatabaseConnectionsProperties properties) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(DEFAULT_FILE_NAME))) {
-            writer.write(properties.getUrl() + "\n" + properties.getUsername() + "\n" + properties.getPassword());
-        } catch (IOException e) {
-            e.printStackTrace();
+        public MissingDatabaseConnectionProperties() {
         }
-    }
 
-    public static DatabaseConnectionsProperties loadConnectionProperties() throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(DEFAULT_FILE_NAME))) {
-            DatabaseConnectionsProperties properties = new DatabaseConnectionsProperties();
-            properties.setUrl(reader.readLine());
-            properties.setUsername(reader.readLine());
-            properties.setPassword(reader.readLine());
-            return properties;
-        } catch (IOException e) {
-            System.out.println(format("File [%s] not found: create new", DEFAULT_FILE_NAME));
-            createInitFile();
-            throw e;
+        public MissingDatabaseConnectionProperties(String message) {
+            super(message);
         }
-    }
 
-    private static boolean createInitFile() {
-        File initializationFile = new File(DEFAULT_FILE_NAME);
-        try {
-            boolean exists = initializationFile.exists();
-            if (exists) {
-                deleteInitFile();
-            }
-            return initializationFile.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
+        public MissingDatabaseConnectionProperties(String message, Throwable cause) {
+            super(message, cause);
         }
-    }
 
-    private static boolean deleteInitFile() {
-        File file = new File(DEFAULT_FILE_NAME);
-        return file.delete();
+        public MissingDatabaseConnectionProperties(Throwable cause) {
+            super(cause);
+        }
+
+        public MissingDatabaseConnectionProperties(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+            super(message, cause, enableSuppression, writableStackTrace);
+        }
     }
 }
-

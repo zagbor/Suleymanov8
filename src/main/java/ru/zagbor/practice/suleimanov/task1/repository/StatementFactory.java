@@ -4,6 +4,7 @@ import ru.zagbor.practice.suleimanov.task1.db.ConnectionFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -13,7 +14,7 @@ public class StatementFactory {
 
     public static Statement getStatement() {
         try {
-            return connection.createStatement();
+            return connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
@@ -21,7 +22,7 @@ public class StatementFactory {
 
     public static PreparedStatement getPrepareStatement(String sql) {
         try {
-            return connection.prepareStatement(sql);
+            return connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }

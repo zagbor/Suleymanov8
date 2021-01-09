@@ -8,12 +8,9 @@ public class ConnectionFactory {
 
     private static DatabaseConnectionsProperties properties;
 
-
-    public static void init(DatabaseConnectionsProperties properties) throws SQLException {
+    public static void init(DatabaseConnectionsProperties properties) {
         ConnectionFactory.properties = properties;
-
     }
-
 
     public static Connection getConnection() {
         try {

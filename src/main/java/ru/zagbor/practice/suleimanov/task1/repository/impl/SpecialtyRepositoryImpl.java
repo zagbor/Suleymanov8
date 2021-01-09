@@ -3,7 +3,7 @@ package ru.zagbor.practice.suleimanov.task1.repository.impl;
 import ru.zagbor.practice.suleimanov.task1.model.Specialty;
 import ru.zagbor.practice.suleimanov.task1.repository.StatementFactory;
 import ru.zagbor.practice.suleimanov.task1.repository.SpecialtyRepository;
-import ru.zagbor.practice.suleimanov.task1.repository.queries.SpecialtyQueries;
+import ru.zagbor.practice.suleimanov.task1.utils.Queries;
 import ru.zagbor.practice.suleimanov.task1.utils.Utils;
 
 import java.sql.ResultSet;
@@ -25,7 +25,7 @@ public class SpecialtyRepositoryImpl implements SpecialtyRepository {
         Statement statement = StatementFactory.getStatement();
         Specialty specialty;
         try {
-            ResultSet resultSet = statement.executeQuery(SpecialtyQueries.GET_SPECIALTY_BY_ID.formatSql(id));
+            ResultSet resultSet = statement.executeQuery(Queries.GET_SPECIALTY_BY_ID.formatSql(id));
             resultSet.next();
             specialty = SpecialtyMapper.specialty(resultSet);
         } catch (SQLException e) {
@@ -38,7 +38,7 @@ public class SpecialtyRepositoryImpl implements SpecialtyRepository {
     public Set<Specialty> getSpecialtiesCustomer(Long id) {
         Set<Specialty> specialties = new HashSet<>();
         try (Statement statement = StatementFactory.getStatement()) {
-            ResultSet resultSet = statement.executeQuery(SpecialtyQueries.GET_SET_SPECIALTIES_CUSTOMER.formatSql(id));
+            ResultSet resultSet = statement.executeQuery(Queries.GET_SET_SPECIALTIES_CUSTOMER.formatSql(id));
             while (resultSet.next()) {
                 Specialty specialty = new Specialty();
                 specialty.setId(resultSet.getLong("id"));
@@ -55,7 +55,7 @@ public class SpecialtyRepositoryImpl implements SpecialtyRepository {
     public void updateSpecialtyInCustomer(Long customerId, Long specialtyId) {
         Statement statement = StatementFactory.getStatement();
         try {
-            statement.executeUpdate(SpecialtyQueries.INSERT_SPECIALTY_IN_CUSTOMER.formatSql(customerId, specialtyId));
+            statement.executeUpdate(Queries.INSERT_SPECIALTY_IN_CUSTOMER.formatSql(customerId, specialtyId));
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
@@ -66,9 +66,9 @@ public class SpecialtyRepositoryImpl implements SpecialtyRepository {
         Statement statement = StatementFactory.getStatement();
         try {
             statement.executeUpdate(
-                    SpecialtyQueries.DELETE_SPECIALTY.formatSql(specialty.getId()));
+                    Queries.DELETE_SPECIALTY.formatSql(specialty.getId()));
             statement.executeUpdate(
-                    SpecialtyQueries.INSERT_SPECIALTY.formatSql(specialty.getId(), specialty.getName()));
+                    Queries.INSERT_SPECIALTY.formatSql(specialty.getId(), specialty.getName()));
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
@@ -80,7 +80,7 @@ public class SpecialtyRepositoryImpl implements SpecialtyRepository {
         Statement statement = StatementFactory.getStatement();
         try {
             statement.executeUpdate(
-                    SpecialtyQueries.CREATE_SPECIALTY.formatSql(specialty.getName()),
+                    Queries.CREATE_SPECIALTY.formatSql(specialty.getName()),
                     Statement.RETURN_GENERATED_KEYS);
             specialty.setId(Utils.getId(statement));
         } catch (SQLException e) {
@@ -94,7 +94,7 @@ public class SpecialtyRepositoryImpl implements SpecialtyRepository {
     public void deleteById(Long id) {
         Statement statement = StatementFactory.getStatement();
         try {
-            statement.executeUpdate(SpecialtyQueries.DELETE_SPECIALTY.formatSql(id));
+            statement.executeUpdate(Queries.DELETE_SPECIALTY.formatSql(id));
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
@@ -104,8 +104,8 @@ public class SpecialtyRepositoryImpl implements SpecialtyRepository {
     @Override
     public boolean isSpecialtyExist(long id) {
         try (Statement statement = StatementFactory.getStatement()) {
-            System.out.println(SpecialtyQueries.IS_EXIST_SPECIALTY.formatSql(id));
-            ResultSet resultSet = statement.executeQuery(SpecialtyQueries.IS_EXIST_SPECIALTY.formatSql(id));
+            System.out.println(Queries.IS_EXIST_SPECIALTY.formatSql(id));
+            ResultSet resultSet = statement.executeQuery(Queries.IS_EXIST_SPECIALTY.formatSql(id));
             resultSet.next();
             if (resultSet.getLong(1) == 1) {
                 return true;
@@ -122,7 +122,7 @@ public class SpecialtyRepositoryImpl implements SpecialtyRepository {
         Statement statement = StatementFactory.getStatement();
         Set<Specialty> specialties = new HashSet<>();
         try {
-            ResultSet resultSet = statement.executeQuery(SpecialtyQueries.GET_ALL_SPECIALTIES.getQuery());
+            ResultSet resultSet = statement.executeQuery(Queries.GET_ALL_SPECIALTIES.getQuery());
             while (resultSet.next()) {
                 Specialty specialty = SpecialtyMapper.specialty(resultSet);
                 specialties.add(specialty);
@@ -138,7 +138,7 @@ public class SpecialtyRepositoryImpl implements SpecialtyRepository {
         try (Statement statement = StatementFactory.getStatement()) {
             specialties.forEach(specialty -> {
                 try {
-                    statement.executeUpdate(SpecialtyQueries.INSERT_SPECIALTY_IN_CUSTOMER.formatSql(customerId, specialty.getId()));
+                    statement.executeUpdate(Queries.INSERT_SPECIALTY_IN_CUSTOMER.formatSql(customerId, specialty.getId()));
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -154,7 +154,7 @@ public class SpecialtyRepositoryImpl implements SpecialtyRepository {
     @Override
     public void deleteSpecialtyCustomer(Long specialtyId, Long customerId) {
         try (Statement statement = StatementFactory.getStatement()) {
-            statement.executeUpdate(SpecialtyQueries.DELETE_SPECIALTY_FROM_CUSTOMER.formatSql(customerId, specialtyId));
+            statement.executeUpdate(Queries.DELETE_SPECIALTY_FROM_CUSTOMER.formatSql(customerId, specialtyId));
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
@@ -173,7 +173,7 @@ public class SpecialtyRepositoryImpl implements SpecialtyRepository {
     private boolean isSpecialtyExistInCustomer(Long specialtyId, Long customerId) {
         try (Statement statement = StatementFactory.getStatement()) {
             ResultSet resultSet = statement.executeQuery(
-                    SpecialtyQueries.IS_EXIST_SPECIALTY_IN_CUSTOMER.formatSql(customerId, specialtyId));
+                    Queries.IS_EXIST_SPECIALTY_IN_CUSTOMER.formatSql(customerId, specialtyId));
             resultSet.next();
             if (resultSet.getLong(1) == 1) {
                 return true;

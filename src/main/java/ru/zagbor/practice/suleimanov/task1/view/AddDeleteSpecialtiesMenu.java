@@ -3,7 +3,6 @@ package ru.zagbor.practice.suleimanov.task1.view;
 
 import ru.zagbor.practice.suleimanov.task1.controller.SpecialtyController;
 import ru.zagbor.practice.suleimanov.task1.model.Specialty;
-import ru.zagbor.practice.suleimanov.task1.utils.Utils;
 import ru.zagbor.practice.suleimanov.task1.utils.UtilsParse;
 import ru.zagbor.practice.suleimanov.task1.utils.UtilsPrint;
 

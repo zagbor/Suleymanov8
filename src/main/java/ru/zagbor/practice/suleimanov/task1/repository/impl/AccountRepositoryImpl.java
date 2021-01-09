@@ -4,7 +4,7 @@ package ru.zagbor.practice.suleimanov.task1.repository.impl;
 import ru.zagbor.practice.suleimanov.task1.model.Account;
 import ru.zagbor.practice.suleimanov.task1.repository.StatementFactory;
 import ru.zagbor.practice.suleimanov.task1.repository.AccountRepository;
-import ru.zagbor.practice.suleimanov.task1.repository.queries.AccountQueries;
+import ru.zagbor.practice.suleimanov.task1.utils.Queries;
 import ru.zagbor.practice.suleimanov.task1.utils.Utils;
 
 import java.sql.ResultSet;
@@ -27,7 +27,7 @@ public class AccountRepositoryImpl implements AccountRepository {
         Statement statement = StatementFactory.getStatement();
         Account account = null;
         try {
-            ResultSet resultSet = statement.executeQuery(AccountQueries.GET_ACCOUNT_BY_ID.formatSql(id));
+            ResultSet resultSet = statement.executeQuery(Queries.GET_ACCOUNT_BY_ID.formatSql(id));
             resultSet.next();
             account = AccountMapper.account(resultSet);
         } catch (SQLException e) {
@@ -39,7 +39,7 @@ public class AccountRepositoryImpl implements AccountRepository {
     @Override
     public Account update(Account account) {
         try (Statement statement = StatementFactory.getStatement()) {
-            statement.executeUpdate(AccountQueries.UPDATE_ACCOUNT.formatSql(account.getAccountStatus().getId(), account.getId()));
+            statement.executeUpdate(Queries.UPDATE_ACCOUNT.formatSql(account.getAccountStatus().getId(), account.getId()));
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
@@ -50,7 +50,7 @@ public class AccountRepositoryImpl implements AccountRepository {
     public void deleteById(Long id) {
         Statement statement = StatementFactory.getStatement();
         try {
-            statement.executeUpdate(AccountQueries.DELETE_ACCOUNT.formatSql(id));
+            statement.executeUpdate(Queries.DELETE_ACCOUNT.formatSql(id));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -72,7 +72,7 @@ public class AccountRepositoryImpl implements AccountRepository {
     @Override
     public Account create(Account account) {
         try (Statement statement = StatementFactory.getStatement()) {
-            statement.executeUpdate(AccountQueries.CREATE_ACCOUNT.
+            statement.executeUpdate(Queries.CREATE_ACCOUNT.
                     formatSql(account.getAccountStatus().getId()), Statement.RETURN_GENERATED_KEYS);
             account.setId(Utils.getId(statement));
             return account;
@@ -84,7 +84,7 @@ public class AccountRepositoryImpl implements AccountRepository {
 
     public void saveAccountStatus(Long idCustomer, Integer idAccountStatus) {
         try (Statement statement = StatementFactory.getStatement()) {
-            statement.executeQuery(AccountQueries.INSERT_ACCOUNT_STATUS_IN_CUSTOMER.formatSql(idCustomer, idAccountStatus));
+            statement.executeQuery(Queries.INSERT_ACCOUNT_STATUS_IN_CUSTOMER.formatSql(idCustomer, idAccountStatus));
         } catch (SQLException e) {
             e.printStackTrace();
         }
